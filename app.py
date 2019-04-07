@@ -44,13 +44,17 @@ def main():
             #Если текст был не /random то выводить "Введите вариант", иначе Результат "Пожалуй это лучшее решение: "
             result_text = 'Enter opinion' if client_text<>'/random' else 'Just Do It: '
             if client_text<>'/random':
-                #a.append([chat_id,client_text])
                 a[chat_id].append(client_text)
             elif client_text == '/random':
-                size = len(a[chat_id])
-                index = randint(0,size-1)
-                result_text += a[chat_id][index]
-                del a[chat_id]
+                if chat_id not in a:
+                    result_text = 'Before type some opinions'
+                elif len(a[chat_id])<1:
+                    result_text = 'Before type some opinions'
+                else:
+                    size = len(a[chat_id])
+                    index = randint(0,size-1)
+                    result_text += a[chat_id][index]
+                    del a[chat_id]
             send_mess(chat_id, result_text)
             update_id += 1
         sleep(1)
